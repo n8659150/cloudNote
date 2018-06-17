@@ -5,19 +5,27 @@
 </template>
 
 <script>
+import request from '@/helpers/request'
+
+(async () =>{
+  let res = await request("auth/login", "POST", { username: "xzzzbds", password: "123456" })
+  console.log(res.data);
+})();
+
 export default {
-  name: 'login',
-  data () {
+  name: "login",
+  data() {
     return {
-      msg: '登录页'
-    }
+      msg: "登录页"
+    };
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
