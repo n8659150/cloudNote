@@ -1,26 +1,34 @@
 <template>
-  <div class="hello">
-    <span>{{ msg }}</span>
-  </div>
+  <span :title="user.username">{{slug}}</span>
 </template>
 
 <script>
-export default {
-  name: 'avatar',
-  data () {
-    return {
-      msg: 'avatar'
+  export default {
+    data() {
+      return {
+        user: {
+          username: 'Jack Li'
+        },
+        slug: 'J'
+      }
     }
   }
-}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-div {
-  width:40px;
-  height:40px;
-  border:1px solid green;
+span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 32px;
   border-radius: 50%;
+  background: #f2b81c;
+  color: #fff;
+  text-shadow: 1px 0 1px #795c19;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 18px;
+  margin-top: 15px;
 }
 </style>
