@@ -16,6 +16,7 @@ export default {
 </script>
 
 <style>
+@import '../static/iconfont.css';
 * {
   box-sizing: border-box;
   margin: 0;

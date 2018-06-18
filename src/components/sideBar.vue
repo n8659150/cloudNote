@@ -34,6 +34,7 @@ export default {
   width: 56px;
   text-align: center;
   background-color: #2c333c;
+  height:100%;
 }
 .icons {
   margin-top: 15px;

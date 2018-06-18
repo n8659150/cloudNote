@@ -33,13 +33,6 @@
 <script>
 import request from "@/helpers/request";
 
-(async () => {
-  let res = await request("auth/login", "POST", {
-    username: "xzzzbds",
-    password: "123456"
-  });
-  console.log(res.data);
-})();
 
 export default {
   data() {
@@ -69,7 +62,7 @@ export default {
       this.isShowLogin = false;
       this.isShowRegister = true;
     },
-    onRegister() {
+    async onRegister() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.register.username)) {
         this.register.isError = true;
         this.register.notice = "用户名3~15个字符，仅限于字母数字下划线中文";
@@ -87,8 +80,18 @@ export default {
           this.register.password
         }`
       );
+      try {
+        let res = await request("/auth/register", "POST", {
+        username: this.register.username,
+        password: this.register.password
+      });
+        console.log(res.data);
+      } 
+      catch(e) {
+        console.log({msg:'注册失败，请检查网络配置'})
+      }
     },
-    onLogin() {
+    async onLogin() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
         this.login.isError = true;
         this.login.notice = "用户名3~15个字符，仅限于字母数字下划线中文";
@@ -107,6 +110,17 @@ export default {
           this.login.password
         }`
       );
+      try {
+        let res = await request("/auth/login", "POST", {
+        username: this.login.username,
+        password: this.login.password
+      });
+        console.log(res.data);
+      } 
+      catch(e) {
+        console.log({msg:'用户名或密码错误'})
+      }
+      
     }
   }
 };
