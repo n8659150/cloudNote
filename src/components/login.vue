@@ -31,9 +31,16 @@
 </template>
 
 <script>
+import auth from "@/apis/auth";
 import request from "@/helpers/request";
-
-
+auth.isUserLogin()
+.then(res => {
+  console.log(res.data);
+}
+)
+.catch(e => {
+  console.log(e);
+})
 export default {
   data() {
     return {
@@ -62,7 +69,7 @@ export default {
       this.isShowLogin = false;
       this.isShowRegister = true;
     },
-    async onRegister() {
+    onRegister() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.register.username)) {
         this.register.isError = true;
         this.register.notice = "用户名3~15个字符，仅限于字母数字下划线中文";
@@ -80,16 +87,14 @@ export default {
           this.register.password
         }`
       );
-      try {
-        let res = await request("/auth/register", "POST", {
-        username: this.register.username,
-        password: this.register.password
-      });
-        console.log(res.data);
-      } 
-      catch(e) {
-        console.log({msg:'注册失败，请检查网络配置'})
-      }
+      auth
+        .register(this.register.username, this.register.password)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
     async onLogin() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
@@ -110,17 +115,14 @@ export default {
           this.login.password
         }`
       );
-      try {
-        let res = await request("/auth/login", "POST", {
-        username: this.login.username,
-        password: this.login.password
-      });
-        console.log(res.data);
-      } 
-      catch(e) {
-        console.log({msg:'用户名或密码错误'})
-      }
-      
+      auth
+        .login(this.login.username, this.login.password)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };
@@ -135,9 +137,9 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
   display: table;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 }
 .modal-wrapper {
   display: table-cell;
@@ -149,13 +151,15 @@ export default {
   margin: 0px auto;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
   display: flex;
   .main {
     flex: 1;
-    background: #36bc64 url(//cloud.hunger-valley.com/17-12-13/38476998.jpg-middle) center center no-repeat;
+    background: #36bc64
+      url(//cloud.hunger-valley.com/17-12-13/38476998.jpg-middle) center center
+      no-repeat;
     background-size: contain;
   }
   .form {
@@ -169,7 +173,7 @@ export default {
       font-size: 16px;
       border-top: 1px solid #eee;
       cursor: pointer;
-      &:nth-of-type(2){
+      &:nth-of-type(2) {
         border-bottom: 1px solid #eee;
       }
     }
@@ -184,15 +188,16 @@ export default {
       margin-top: 18px;
       cursor: pointer;
     }
-    .login,.register {
+    .login,
+    .register {
       padding: 0px 20px;
       border-top: 1px solid #eee;
-       height: 0;
-       overflow: hidden;
-       transition: height .4s;
-       &.show {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.4s;
+      &.show {
         height: 193px;
-       }
+      }
       input {
         display: block;
         width: 100%;
@@ -219,7 +224,7 @@ export default {
     }
     .login {
       border-top: 0;
-    } 
+    }
   }
 }
 </style>

@@ -7,13 +7,14 @@
       <router-link to="/trash/2" title="回收站"><i class="iconfont icon-trash"></i></router-link> 
     </div> 
     <div class="logout" >
-      <i class="iconfont icon-logout"></i>
+      <i class="iconfont icon-logout" @click="logout"></i>
     </div>
   </div>
 </template>
 
 <script>
-import avatar from "@/components/avatar";
+import auth from '@/apis/auth'
+import avatar from "@/components/avatar"
 export default {
   name: "sideBar",
   components: {
@@ -23,6 +24,17 @@ export default {
     return {
       msg: "侧边栏"
     };
+  },
+  methods:{
+    logout(){
+      auth.logout()
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(e => {
+        console.log(e);
+      })
+    }
   }
 };
 </script>

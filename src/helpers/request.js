@@ -3,7 +3,7 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://note-server.hunger-valley.com';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
+axios.defaults.withCredentials = true;
 export default function request(url, method = 'GET', data = {}) {
     // 将get,post等提交方式的参数统一化，方便后续调用
     let option = {
