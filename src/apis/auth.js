@@ -22,7 +22,7 @@ export default {
             return res
           } 
           catch(e) {
-            console.log(e)
+            console.log(e);
           }
     },
     async logout(){

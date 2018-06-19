@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import auth from '@/apis/auth'
-import avatar from "@/components/avatar"
+import auth from "@/apis/auth";
+import avatar from "@/components/avatar";
 export default {
   name: "sideBar",
   components: {
@@ -25,15 +25,16 @@ export default {
       msg: "侧边栏"
     };
   },
-  methods:{
-    logout(){
-      auth.logout()
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(e => {
-        console.log(e);
-      })
+  methods: {
+    logout() {
+      auth
+        .logout()
+        .then(res => {
+          this.$router.push({path:'login'})
+        })
+        .catch(e => {
+          console.log("注销失败,请检查网络情况");
+        });
     }
   }
 };
@@ -46,7 +47,7 @@ export default {
   width: 56px;
   text-align: center;
   background-color: #2c333c;
-  height:100%;
+  height: 100%;
 }
 .icons {
   margin-top: 15px;
