@@ -5,12 +5,20 @@
 </template>
 
 <script>
+import auth from "@/apis/auth";
 export default {
   name: 'trashDetail',
   data () {
     return {
       msg: '回收站页面'
     }
+  },
+  created(){
+    auth.isUserLogin().then(res => {
+     if(!res.data.isLogin) {
+       this.$router.push('/login')
+     }
+    });
   }
 }
 </script>

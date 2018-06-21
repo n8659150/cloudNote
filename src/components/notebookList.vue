@@ -13,12 +13,20 @@
 </template>
 
 <script>
+import auth from "@/apis/auth"
 export default {
   name: 'notebooks',
   data () {
     return {
       msg: '笔记本列表页'
     }
+  },
+  created(){
+    auth.isUserLogin().then(res => {
+     if(!res.data.isLogin) {
+       this.$router.push('/login')
+     }
+    });
   }
 }
 </script>

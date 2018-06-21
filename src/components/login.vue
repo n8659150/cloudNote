@@ -33,6 +33,7 @@
 <script>
 import auth from "@/apis/auth";
 import request from "@/helpers/request";
+import bus from "@/helpers/bus";
 auth.isUserLogin()
 .then(res => {
   console.log(res.data);
@@ -90,6 +91,7 @@ export default {
       auth
         .register(this.register.username, this.register.password)
         .then(res => {
+          bus.$emit('userInfo',{username:this.login.username});
           this.register.isError = false;
           this.register.notice = "";
           this.$router.push({path:'notebooks'});
@@ -99,7 +101,7 @@ export default {
           this.register.notice = '注册失败,请检查网络连接';
         });
     },
-    async onLogin() {
+    onLogin() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
         this.login.isError = true;
         this.login.notice = "用户名3~15个字符，仅限于字母数字下划线中文";
@@ -120,11 +122,13 @@ export default {
       auth
         .login(this.login.username, this.login.password)
         .then(res => {
+          bus.$emit('userInfo',{username:this.login.username});
           this.login.isError = false;
           this.login.notice = "";
           this.$router.push({path:'notebooks'});
         })
         .catch(e => {
+          console.log(e);
           this.login.isError = true;
           this.login.notice = '用户名或密码错误';
         });

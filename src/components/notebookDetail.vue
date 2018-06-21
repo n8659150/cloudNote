@@ -5,12 +5,20 @@
 </template>
 
 <script>
+import auth from "@/apis/auth"
 export default {
   name: 'notebookDetail',
   data () {
     return {
       msg: '笔记本详情页'
     }
+  },
+  created(){
+    auth.isUserLogin().then(res => {
+     if(!res.data.isLogin) {
+       this.$router.push('/login')
+     }
+    });
   }
 }
 </script>
